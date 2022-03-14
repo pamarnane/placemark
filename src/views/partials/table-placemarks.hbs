@@ -1,0 +1,18 @@
+<table class="table is-fullwidth">
+  <thead>
+    <tr>
+      <th><abbr title="Name">Name</abbr></th>
+      <th><abbr title="Category">Category</abbr></th>
+      <th><abbr title="Description">Description</abbr></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each placemarks}}
+      <tr>
+        <td>{{name}}</td>
+        <td>{{category}}</td>
+        <td>{{description}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
