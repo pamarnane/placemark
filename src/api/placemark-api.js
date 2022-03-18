@@ -36,7 +36,7 @@ export const placemarkApi = {
     tags: ["api"],
     description: "Get all placemarkApi",
     notes: "Returns details of all placemarkApi",
-    response: { schema: PlacemarkArray, failAction: validationError },
+    response: { schema: PlacemarkSpec, failAction: validationError },
     validate: { params: {id: IdSpec}, failAction: validationError },
   },
 

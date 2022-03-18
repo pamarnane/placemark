@@ -36,19 +36,25 @@ export const testUsers = [
 export const lahinch = {
   name: "Lahinch",
   category: "Beach",
-  description: "Nice beach for a walk & surf"
+  description: "Nice beach for a walk & surf",
+  latitude: 52.9335,
+  longitude: 9.3441,
 };
 
 export const testPlacemarks = [
   {
     name: "Lahinch",
     category: "Beach",
-    description: "Nice beach for a walk & surf"
+    description: "Nice beach for a walk & surf",
+    latitude: 52.9335,
+    longitude: 9.3441,
   },
   {
     name: "Rock of Cashel",
     category: "Castle",
-    description: "Norman castle in the middle of Tipperary"
+    description: "Norman castle in the middle of Tipperary",
+    latitude: 52.5201,
+    longitude: 7.8905,
   },
 
 ] 
