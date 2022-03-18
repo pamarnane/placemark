@@ -4,6 +4,8 @@ import Cookie from "@hapi/cookie";
 import Handlebars from "handlebars";
 import path from "path";
 import Joi from "joi";
+import HapiSwagger from "hapi-swagger";
+import Inert from "@hapi/inert";
 import { fileURLToPath } from "url";
 import { webRoutes } from "./web-routes.js";
 import { apiRoutes } from "./api-routes.js";
@@ -13,12 +15,26 @@ import { accountsController } from "./controllers/accounts-controllers.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+ const swaggerOptions = {
+    info: {
+      title: "Playtime API",
+      version: "0.1",
+    },
+  };
+
 async function init() {
   const server = Hapi.server({
     port: 3000,
     host: "localhost",
   });
-  await server.register(Vision);
+  await server.register([
+    Inert,
+    Vision,
+    {
+      plugin: HapiSwagger,
+      options: swaggerOptions,
+    },
+  ]);
   await server.register(Cookie);
   server.validator(Joi);
   server.views({
