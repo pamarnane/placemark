@@ -1,16 +1,30 @@
 <form action="/dashboard/addplacemark" method="POST">
   <div class="columns">
     <div class="column">
-      <label class="label">Placemark Name</label> <input class="input" type="text" placeholder="Enter placemark name" name="name">
+      <label class="label">Name</label> <input class="input" type="text" placeholder="Enter placemark name" name="name">
     </div>
     <div class="column">
-      <label class="label">Placemark Category</label> <input class="input" type="text" placeholder="Enter placemark category" name="category">
+      <label class="label">Category</label> {{!-- <input class="input" type="text" placeholder="Enter placemark category" name="category"> --}}
+          <div class="select">
+            <select>
+              {{#each categories}}
+                <option>{{category}}</option>
+              {{/each}}
+            </select>
+          </div>
+
     </div>
     <div class="column">
-      <label class="label">Placemark Description</label> <input class="input" type="text" placeholder="Enter placemark description" name="description">
+      <label class="label">Description</label> <input class="input" type="text" placeholder="Enter placemark description" name="description">
     </div>
     <div class="column">
-      <label class="label">Placemark Description</label> <button class="button is-link">Add Placemark</button>
+      <label class="label">Latitude</label> <input class="input" type="number" placeholder="Enter latitude" name="latitude">
+    </div>
+    <div class="column">
+      <label class="label">Longitude</label> <input class="input" type="number" placeholder="Enter longitude" name="longitude">
+    </div>
+    <div class="column">
+      <label class="label">---</label> <button class="button is-link">Add Placemark</button>
     </div>
   </div>
 </form>

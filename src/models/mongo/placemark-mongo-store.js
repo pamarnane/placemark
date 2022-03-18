@@ -1,4 +1,4 @@
-import { Placemark } from "./placemark.js";
+import { Placemark, Category } from "./placemark.js";
 
 export const placemarkMongoStore = {
   async getAllPlacemarks() {
@@ -35,5 +35,10 @@ export const placemarkMongoStore = {
 
   async deleteAllPlacemarks() {
     await Placemark.deleteMany({});
+  },
+
+  async getAllCategories() {
+    const categories = await Category.find().lean();
+    return categories;
   }
 };

@@ -6,10 +6,16 @@ const placemarkSchema = new Schema({
   name: String,
   category: String,
   description: String,
+//  favourite: Boolean,
   userid: {
     type: Schema.Types.ObjectId,
     ref: "Placemark",
   },
 });
 
+const categorySchema = new Schema({
+  category: String,
+});
+
 export const Placemark = Mongoose.model("Placemark", placemarkSchema);
+export const Category = Mongoose.model("Category", categorySchema);

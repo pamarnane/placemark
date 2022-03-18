@@ -4,8 +4,13 @@
 export const accountsController = {
   index: {
     auth: false,
-    handler: function (request, h) {
-      return h.view("main", { title: "Welcome to Ireland Golf" });
+    handler: async function (request, h) {
+      const placemarks = await db.placemarkStore.getAllPlacemarks();
+      const viewData = {
+        placemarks: placemarks,
+        title: "Welcome to Placemark",
+      };
+      return h.view("main", viewData);
     },
   },
   showSignup: {

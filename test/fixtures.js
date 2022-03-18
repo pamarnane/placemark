@@ -46,7 +46,7 @@ export const testPlacemarks = [
     description: "Nice beach for a walk & surf"
   },
   {
-    name: "Rock of Cashe",
+    name: "Rock of Cashel",
     category: "Castle",
     description: "Norman castle in the middle of Tipperary"
   },
