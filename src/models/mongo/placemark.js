@@ -8,7 +8,7 @@ const placemarkSchema = new Schema({
   description: String,
   userid: {
     type: Schema.Types.ObjectId,
-    ref: "User",
+    ref: "Placemark",
   },
 });
 
