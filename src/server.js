@@ -6,7 +6,9 @@ import path from "path";
 import Joi from "joi";
 import HapiSwagger from "hapi-swagger";
 import Inert from "@hapi/inert";
+import jwt from "hapi-auth-jwt2";
 import { fileURLToPath } from "url";
+import { validate } from "./api/jwt-utils.js";
 import { webRoutes } from "./web-routes.js";
 import { apiRoutes } from "./api-routes.js";
 import { db } from "./models/db.js";
@@ -36,6 +38,7 @@ async function init() {
     },
   ]);
   await server.register(Cookie);
+  await server.register(jwt);
   server.validator(Joi);
   server.views({
     engines: {
@@ -57,6 +60,13 @@ async function init() {
     redirectTo: "/",
     validateFunc: accountsController.validate,
   });
+
+  server.auth.strategy("jwt", "jwt", {
+    key: process.env.cookie_password,
+    validate: validate,
+    verifyOptions: { algorithms: ["HS256"] }
+  });
+  
   server.auth.default("session");
 
   db.init("mongo");
