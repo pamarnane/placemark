@@ -1,0 +1,33 @@
+<table class="ui table is-fullwidth">
+  <thead>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each users}}
+      <tr>
+        <td>
+          {{firstName}}
+        </td>
+        <td>
+          {{lastName}}
+        </td>
+        <td>
+          {{email}}
+        </td>
+        <td>
+          <a class="button is-danger is-outlined" href="/admin/deleteuser/{{_id}}">
+              <span>Delete</span>
+                <span class="icon is-small">
+                  <i class="fas fa-times"></i>
+                </span>
+            </a>
+        </td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

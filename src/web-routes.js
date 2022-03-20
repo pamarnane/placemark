@@ -1,6 +1,8 @@
 import { accountsController } from "./controllers/accounts-controllers.js";
 import { dashboardController } from "./controllers/dashboard-controller.js";
 import { aboutController } from "./controllers/about-controller.js";
+import { adminController } from "./controllers/admin-controller.js";
+
 
 export const webRoutes = [
   { method: "GET", path: "/", config: accountsController.index },
@@ -15,4 +17,9 @@ export const webRoutes = [
   { method: "GET", path: "/dashboard", config: dashboardController.index },
   { method: "GET", path: "/dashboard/deleteplacemark/{id}", config: dashboardController.deletePlacemark },
   { method: "POST", path: "/dashboard/addplacemark", config: dashboardController.addPlacemark },
+
+  { method: "GET", path: "/admin", config: adminController.index },
+  { method: "POST", path: "/admin/addcategory", config: adminController.addCategory },
+  { method: "GET", path: "/admin/deletecategory/{id}", config: adminController.deleteCategory },
+  { method: "GET", path: "/admin/deleteuser/{id}", config: adminController.deleteUser },
 ];

@@ -29,7 +29,6 @@ export const dashboardController = {
           placemarks: placemarks,
           errors: error.details,
         };
-        // return h.view("dashboard-view", { title: "Add Placemark error", errors: error.details }).takeover().code(400);
         return h.view("dashboard-view", viewData).takeover().code(400);
       },
     },
@@ -48,8 +47,8 @@ export const dashboardController = {
   },
 
   deletePlacemark: {
-  handler: async function (request, h) {
-    const loggedInUser = request.auth.credentials;
+    handler: async function (request, h) {
+      const loggedInUser = request.auth.credentials;
      const placemark = await db.placemarkStore.getPlacemarkById(request.params.id);
     // logger.info(`Deleting Placemark ${placemarkId}`);
     await db.placemarkStore.deletePlacemark(placemark._id);

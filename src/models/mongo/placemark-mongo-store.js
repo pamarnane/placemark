@@ -40,5 +40,24 @@ export const placemarkMongoStore = {
   async getAllCategories() {
     const categories = await Category.find().lean();
     return categories;
-  }
+  },
+
+  async addCategory(category) {
+    const newCategory = new Category(category)
+    const categoryObj =await newCategory.save();
+    return this.getCategorybyId(categoryObj._id);
+  },
+
+  async getCategorybyId(id) {
+    const category =await Category.find({_id: id}).lean();
+    return category;
+  },
+
+  async deleteCategoryById(id) {
+    try {
+      await Category.deleteOne({ _id: id });
+    } catch (error) {
+      console.log("bad id");
+    }
+  },
 };
