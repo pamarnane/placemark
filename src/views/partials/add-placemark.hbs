@@ -6,9 +6,9 @@
     <div class="column">
       <label class="label">Category</label>
           <div class="select">
-            <select>
+            <select name="category" id="category" >
               {{#each categories}}
-                <option>{{category}}</option>
+                <option value={{category}} >{{category}}</option>
               {{/each}}
             </select>
           </div>

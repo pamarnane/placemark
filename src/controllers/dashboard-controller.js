@@ -24,10 +24,12 @@ export const dashboardController = {
       failAction: async function (request, h, error) {
         const loggedInUser = request.auth.credentials;
         const placemarks = await db.placemarkStore.getUserPlacemarks(loggedInUser._id);
+        const categories = await db.placemarkStore.getAllCategories();
         const viewData = {
           title: "PlaceMark Dashboard",
           placemarks: placemarks,
           errors: error.details,
+          categories: categories,
         };
         return h.view("dashboard-view", viewData).takeover().code(400);
       },
@@ -39,7 +41,6 @@ export const dashboardController = {
         name: request.payload.name,
         category: request.payload.category,
         description: request.payload.description,
-      //  favourite: request.payload.favourite,
       };
       await db.placemarkStore.addPlacemark(newPlacemark);
       return h.redirect("/dashboard");
