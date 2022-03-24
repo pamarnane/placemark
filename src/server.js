@@ -54,8 +54,8 @@ async function init() {
   });
   server.auth.strategy("session", "cookie", {
     cookie: {
-      name: "placemark",
-      password: "secretpasswordnotrevealedtoanyone",
+      name: process.env.cookie_name,
+      password: process.env.cookie_password,
       isSecure: false,
     },
     redirectTo: "/",
