@@ -1,6 +1,7 @@
  import { db } from "../models/db.js";
  import { UserSpec, UserCredentialsSpec } from "../models/db/joi-schemas.js";
 
+
 export const accountsController = {
   index: {
     auth: false,
@@ -21,7 +22,7 @@ export const accountsController = {
   },
   signup: {
     auth: false,
-    validate: {
+    validate: {    
       payload: UserSpec,
       failAction: function (request, h, error) {
         return h.view("signup-view", { title: "Sign up error", errors: error.details }).takeover().code(400);
@@ -29,6 +30,7 @@ export const accountsController = {
     },
     handler: async function (request, h) {
       const user = request.payload;
+      user.scope = "user";
       await db.userStore.addUser(user);
       return h.redirect("/");
     },

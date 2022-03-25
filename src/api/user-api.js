@@ -1,7 +1,7 @@
 /* eslint-disable no-else-return */
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
-import { UserArray, UserSpec, IdSpec } from "../models/db/joi-schemas.js";
+import { UserArray, UserSpec, UserCredentialsSpec, IdSpec, JwtAuth } from "../models/db/joi-schemas.js";
 import { validationError } from "../logger.js";
 import { createToken } from "./jwt-utils.js";
 
@@ -99,6 +99,11 @@ export const userApi = {
       } catch (err) {
         return Boom.serverUnavailable("Database Error");
       }
-    }
+    },
+    tags: ["api"],
+    description: "Authenticate  a User",
+    notes: "If user has valid email/password, create and return a JWT token",
+    validate: { payload: UserCredentialsSpec, failAction: validationError },
+    response: { schema: JwtAuth, failAction: validationError }
   }
 };

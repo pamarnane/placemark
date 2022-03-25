@@ -1,13 +1,17 @@
 import { handler } from "@hapi/hapi/lib/cors.js";
+import _ from "lodash";
 import { db } from "../models/db.js";
 import { PlacemarkSpec } from "../models/db/joi-schemas.js";
+
+
 
 export const dashboardController = {
   index: {
     handler: async function (request, h) {
       const loggedInUser = request.auth.credentials;
       const placemarks = await db.placemarkStore.getUserPlacemarks(loggedInUser._id);
-      const categories = await db.placemarkStore.getAllCategories();
+      let categories = await db.placemarkStore.getAllCategories();
+      categories = _.sortBy(categories, "category")
       const viewData = {
         title: "PlaceMark Dashboard",
         placemarks: placemarks,

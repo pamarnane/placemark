@@ -45,7 +45,7 @@ export const placemarkMongoStore = {
   async addCategory(category) {
     const newCategory = new Category(category)
     const categoryObj =await newCategory.save();
-    return this.getCategorybyId(categoryObj._id);
+    return this.getCategorybyId(categoryObj.id);
   },
 
   async getCategorybyId(id) {

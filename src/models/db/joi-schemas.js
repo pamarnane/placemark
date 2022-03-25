@@ -8,6 +8,7 @@ export const UserSpec = Joi.object()
   lastName: Joi.string().example("Bloggs").required(),
   email: Joi.string().email().example("joe@bloggs.com").required(),
   password: Joi.string().example("secret").required(),
+  scope: Joi.string().example("user"),
   _id: IdSpec,
   __v: Joi.number(),
   })
@@ -33,3 +34,10 @@ export const PlacemarkSpec = Joi.object()
 .label("PlacemarkDetails");
 
 export const PlacemarkArray = Joi.array().items(PlacemarkSpec).label("PlacemarkArray");
+
+export const JwtAuth = Joi.object()
+  .keys({
+    success: Joi.boolean().example("true").required(),
+    token: Joi.string().example("eyJhbGciOiJND.g5YmJisIjoiaGYwNTNjAOhE.gCWGmY5-YigQw0DCBo").required(),
+  })
+  .label("JwtAuth");
