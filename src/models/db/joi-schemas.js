@@ -21,6 +21,13 @@ export const UserCredentialsSpec = {
   password: Joi.string().required(),
 };
 
+export const UserUpdateSpec = {
+  firstName: Joi.string().example("Joe").required(),
+  lastName: Joi.string().example("Bloggs").required(),
+  email: Joi.string().email().example("joe@bloggs.com").required(),
+  password: Joi.string().example("secret").required(),
+};
+
 export const PlacemarkSpec = Joi.object()
 .keys({
   name: Joi.string().example("Lahinch").required(),

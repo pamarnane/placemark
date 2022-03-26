@@ -1,5 +1,5 @@
  import { db } from "../models/db.js";
- import { UserSpec, UserCredentialsSpec } from "../models/db/joi-schemas.js";
+ import { UserSpec, UserUpdateSpec, UserCredentialsSpec } from "../models/db/joi-schemas.js";
 
 
 export const accountsController = {
@@ -65,6 +65,39 @@ export const accountsController = {
     handler: function (request, h) {
       request.cookieAuth.clear();
       return h.redirect("/");
+    },
+  },
+  showAccount: {
+    // auth: false,
+    handler: async function (request, h) {
+      const loggedInUser = request.auth.credentials;
+      const userDetails = await db.userStore.getUserByEmail(loggedInUser.email);
+      const viewData = {
+        title: "Account",
+        user: userDetails,
+      };
+      return h.view("account-view", viewData);
+    },
+  },
+  update: {
+    auth: false,
+     validate: {    
+      payload: UserUpdateSpec,
+      failAction: function (request, h, error) {
+        return h.view("dashboard-view", { title: "Sign up error", errors: error.details }).takeover().code(400);
+      },
+    },  
+    handler: async function (request, h) {
+      const user = request.payload;
+      const userDetails = await db.userStore.getUserByEmail(user.email);
+      const updatedDetails = {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        password: user.password
+      }
+      await db.userStore.updateUser(userDetails._id, updatedDetails);
+      return h.redirect("/dashboard");
     },
   },
 
