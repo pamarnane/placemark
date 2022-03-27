@@ -1,4 +1,4 @@
-import { Placemark, Category } from "./placemark.js";
+import { Placemark, Category, Activity } from "./placemark.js";
 
 export const placemarkMongoStore = {
   async getAllPlacemarks() {
@@ -60,4 +60,37 @@ export const placemarkMongoStore = {
       console.log("bad id");
     }
   },
+
+  async getAllActivities() {
+    const activities = await Activity.find().lean();
+    return activities;
+  },
+
+  async addActivity(activity) {
+    const newActivity = new Activity(activity)
+    const activityObj =await newActivity.save();
+    return this.getActivitybyId(activityObj.id);
+  },
+
+  async getActivitybyId(id) {
+    const activity =await Activity.find({_id: id}).lean();
+    return activity;
+  },
+
+  async deleteActivityById(id) {
+    try {
+      await Activity.deleteOne({ _id: id });
+    } catch (error) {
+      console.log("bad id");
+    }
+  },
+
+  async updatePlacemark(updatedPlacemark) {
+    const placemark = await Placemark.findOne({ _id: updatedPlacemark._id });
+    placemark.title = updatedPlacemark.title;
+    placemark.img = updatedPlacemark.img;
+    await placemark.save();
+  },
+
+
 };

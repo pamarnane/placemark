@@ -1,7 +1,7 @@
 /* eslint-disable no-else-return */
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
-import { UserArray, UserSpec, UserCredentialsSpec, IdSpec, JwtAuth } from "../models/db/joi-schemas.js";
+import {UserArray, UserSpec, UserCredentialsSpec, IdSpec, JwtAuth, UserUpdateSpec } from "../models/db/joi-schemas.js";
 import { validationError } from "../logger.js";
 import { createToken } from "./jwt-utils.js";
 
@@ -29,6 +29,7 @@ export const userApi = {
       strategy: "jwt",
     },
     handler: async function (request, h) {
+      const x = 1;
       try {
         const user = await db.userStore.getUserById(request.params.id);
         if (!user) {
@@ -105,5 +106,33 @@ export const userApi = {
     notes: "If user has valid email/password, create and return a JWT token",
     validate: { payload: UserCredentialsSpec, failAction: validationError },
     response: { schema: JwtAuth, failAction: validationError }
-  }
+  },
+
+  update: {
+    auth: {
+      strategy: "jwt",
+    },
+    handler: async function (request, h) {
+      try {
+        const userDetails = request.payload;
+        const updatedDetails = {
+          firstName: userDetails.firstName,
+          lastName: userDetails.lastName,
+          email: userDetails.email,
+          password: userDetails.password
+        }
+        const updatedUser = await db.userStore.updateUser(request.params.id, updatedDetails);
+        if (!updatedUser) {
+          return Boom.unauthorized("User not updated");
+        }
+        else {
+          return await db.userStore.getUserById(request.params.id);
+        }
+      }
+      catch (err) {
+        return Boom.serverUnavailable("Database Error");
+      }
+    },
+  },
+
 };

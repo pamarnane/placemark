@@ -6,6 +6,7 @@ export const apiRoutes = [
   { method: "POST", path: "/api/users", config: userApi.create },
   { method: "DELETE", path: "/api/users", config: userApi.deleteAll },
   { method: "GET", path: "/api/users/{id}", config: userApi.findOne },
+  { method: "POST", path: "/api/users/{id}", config: userApi.update },
 
   { method: "GET", path: "/api/placemarks", config: placemarkApi.find },
   { method: "POST", path: "/api/placemarks", config: placemarkApi.create },

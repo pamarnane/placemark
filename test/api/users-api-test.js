@@ -1,20 +1,21 @@
 import { assert } from "chai";
 import { placemarkService } from "./placemark-service.js";
 import { assertSubset } from "../test-utils.js";
-import { maggie, testUsers } from "../fixtures.js";
+import { maggie, maggieCredentials, testUsers } from "../fixtures.js";
+
 
 suite("User API tests", () => {
   setup(async () => {
     placemarkService.clearAuth();
     await placemarkService.createUser(maggie);
-    await placemarkService.authenticate(maggie);
+    await placemarkService.authenticate(maggieCredentials);
     await placemarkService.deleteAllUsers();
     for (let i = 0; i < testUsers.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
       testUsers[0] = await placemarkService.createUser(testUsers[i]);
     }
     await placemarkService.createUser(maggie);
-    await placemarkService.authenticate(maggie);
+    await placemarkService.authenticate(maggieCredentials);
   });
   teardown(async () => {
   });
@@ -30,7 +31,7 @@ suite("User API tests", () => {
     assert.equal(returnedUsers.length, 4);
     await placemarkService.deleteAllUsers();
     await placemarkService.createUser(maggie);
-    await placemarkService.authenticate(maggie);
+    await placemarkService.authenticate(maggieCredentials);
     returnedUsers = await placemarkService.getAllUsers();
     assert.equal(returnedUsers.length, 1);
   });
@@ -53,7 +54,7 @@ suite("User API tests", () => {
   test("get a user - deleted user", async () => {
     await placemarkService.deleteAllUsers();
     await placemarkService.createUser(maggie);
-    await placemarkService.authenticate(maggie);
+    await placemarkService.authenticate(maggieCredentials);
     try {
       const returnedUser = await placemarkService.getUser(testUsers[0]._id);
       assert.fail("Should not return a response");
@@ -62,4 +63,19 @@ suite("User API tests", () => {
       assert.equal(error.response.data.statusCode, 404);
     }
   });
+ 
+  test("update a user", async () => {
+    const user = await placemarkService.createUser(maggie);
+    await placemarkService.authenticate(maggieCredentials);
+    try {
+      const updatedDetails = user;
+      updatedDetails.firstName = "margaret"
+      const updatedUser = await placemarkService.updateUser(user._id, updatedDetails);
+      assertSubset((user, updatedUser));
+    }
+    catch (error) {
+      assert(error.response.data.message === "No User with this id");
+      assert.equal(error.response.data.statusCode, 404);
+    }
+  }); 
 });

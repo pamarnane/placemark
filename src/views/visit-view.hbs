@@ -1,0 +1,53 @@
+{{> menu active="visit-view"}}
+
+<section class="section columns is-vcentered">
+  <div class="column has-text-centered">
+    <div class="content">
+      <h1>{{placemark.name}}</h1>
+    </div>
+    <section class="section">
+      {{> table-visits}}
+    </section>
+    <section class="section">
+      <div class="box">
+        <form action="/placemark/{{placemark._id}}/logvisit" method="POST">
+          <div class="columns">
+            {{!-- <div class="column">
+              <label class="label">Name</label> <input class="input" type="text" placeholder="Enter visit name" name="name">
+            </div> --}}
+            <div class="column">
+              <label class="label">Activity</label>
+                  <div class="select">
+                    <select name="activity" id="activity" >
+                      {{#each activities}}
+                        <option value={{activity}} >{{activity}}</option>
+                      {{/each}}
+                    </select>
+                  </div>
+            </div>
+            <div class="column">
+              <label class="label">Date</label> <input class="input" type="text" placeholder="Enter date" name="date">
+            </div>
+          </div>
+          <div>
+            <label class="label">Description</label> <textarea class="textarea" type="text" placeholder="Enter visit summary" name="description"></textarea>
+          </div>
+          <button class="button is-primary">Log Visit</button>
+        </form>
+      </div>
+    </section>
+  </div>
+  <div class="column">
+    {{> placemark-image }}
+  </div>
+</section>
+
+<script>
+  const fileInput = document.querySelector(".file-input");
+  fileInput.onchange = () => {
+    if (fileInput.files.length > 0) {
+      const fileName = document.querySelector(".file-name");
+      fileName.textContent = fileInput.files[0].name;
+    }
+  };
+</script>

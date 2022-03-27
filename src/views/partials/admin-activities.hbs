@@ -1,20 +1,18 @@
 <table class="ui table is-fullwidth">
   <thead>
     <tr>
-      <th>Category</th>
-      <th></th>
-      <th></th>
+      <th>Activies</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
-    {{#each categories}}
+    {{#each activities}}
       <tr>
         <td>
-          {{category}}
+          {{activity}}
         </td>
         <td>
-          <a class="button is-danger is-outlined" href="/admin/deletecategory/{{_id}}">
+          <a class="button is-danger is-outlined" href="/admin/deleteactivity/{{_id}}">
               <span>Delete</span>
                 <span class="icon is-small">
                   <i class="fas fa-times"></i>
@@ -22,26 +20,25 @@
             </a>
         </td>
       </tr>
-      
     {{/each}}
   </tbody>
 </table>
 
-<button class="button js-modal-trigger" data-target="add-category-modal">
-Add Category
+<button class="button js-modal-trigger" data-target="add-activity-modal">
+Add Activity
 </button>
 
-<div id="add-category-modal" class="modal">
+<div id="add-activity-modal" class="modal">
   <div class="modal-background"></div>
   <div class="modal-content">
     <div class="box">
-      <form action="/admin/addcategory" method="POST">
+      <form action="/admin/addactivity" method="POST">
         <div class="columns">
           <div class="column">
-            <input class="input" type="text" placeholder="Enter category" name="category">
+            <input class="input" type="text" placeholder="Enter activity" name="activity">
           </div>
           <div class="column">
-            <button class="button is-link">Add Category</button>
+            <button class="button is-link">Add Activity</button>
           </div>
         </div>
       </form>

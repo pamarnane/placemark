@@ -1,17 +1,17 @@
 import { assert } from "chai";
 import { placemarkService } from "./placemark-service.js";
 import { assertSubset } from "../test-utils.js";
-import { lahinch, testPlacemarks, maggie } from "../fixtures.js";
+import { lahinch, testPlacemarks, maggie, maggieCredentials } from "../fixtures.js";
 
 suite("Placemark API tests", () => {
   setup(async () => {
     placemarkService.clearAuth();
     let user = await placemarkService.createUser(maggie);
-    await placemarkService.authenticate(maggie);
+    await placemarkService.authenticate(maggieCredentials);
     await placemarkService.deleteAllPlacemarks();
     await placemarkService.deleteAllUsers();
     user = await placemarkService.createUser(maggie);
-    await placemarkService.authenticate(maggie);
+    await placemarkService.authenticate(maggieCredentials);
     for (let i = 0; i < testPlacemarks.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
       testPlacemarks[0] = await placemarkService.createPlacemark(testPlacemarks[i]);

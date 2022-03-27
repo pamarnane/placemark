@@ -5,6 +5,7 @@
       <th><abbr title="Category">Category</abbr></th>
       <th><abbr title="Description">Description</abbr></th>
       <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -13,16 +14,21 @@
         <td>{{name}}</td>
         <td>{{category}}</td>
         <td>{{description}}</td>
-        <td><a class="button is-danger is-outlined" href="/dashboard/deleteplacemark/{{_id}}">
-              <span>Delete</span>
-                <span class="icon is-small">
-                  <i class="fas fa-times"></i>
-                </span>
+        <td>
+        <div class="field is-grouped" >
+          <p class="control">
+            <a href="/placemark/{{_id}}">
+              <button class="button is-primary">Open Logs</button>  
             </a>
+          </p>
+
+            <a href="/dashboard/deleteplacemark/{{_id}}">
+              <button class="button is-danger is-outlined"><span>Delete</span><span class="icon is-small"><i class="fas fa-times"></i></span></button>
+            </a>
+          </p>
+        </div>
         </td>
       </tr>
     {{/each}}
   </tbody>
 </table>
-
-

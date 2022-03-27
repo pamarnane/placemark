@@ -84,19 +84,19 @@ export const accountsController = {
      validate: {    
       payload: UserUpdateSpec,
       failAction: function (request, h, error) {
-        return h.view("dashboard-view", { title: "Sign up error", errors: error.details }).takeover().code(400);
+        return h.view("dashboard-view", { title: "Update error", errors: error.details }).takeover().code(400);
       },
     },  
     handler: async function (request, h) {
       const user = request.payload;
-      const userDetails = await db.userStore.getUserByEmail(user.email);
+      const userDetails = await db.userStore.getUserById(request.params.id);
       const updatedDetails = {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
         password: user.password
       }
-      await db.userStore.updateUser(userDetails._id, updatedDetails);
+      await db.userStore.updateUser(request.params.id, updatedDetails);
       return h.redirect("/dashboard");
     },
   },

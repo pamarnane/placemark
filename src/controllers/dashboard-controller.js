@@ -11,11 +11,14 @@ export const dashboardController = {
       const loggedInUser = request.auth.credentials;
       const placemarks = await db.placemarkStore.getUserPlacemarks(loggedInUser._id);
       let categories = await db.placemarkStore.getAllCategories();
+      let activities = await db.placemarkStore.getAllActivities();
       categories = _.sortBy(categories, "category")
+      activities = _.sortBy(activities, "activity")
       const viewData = {
         title: "PlaceMark Dashboard",
         placemarks: placemarks,
         categories: categories,
+        activities: activities,
       };
       return h.view("dashboard-view", viewData);
     },

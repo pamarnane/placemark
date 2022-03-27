@@ -15,10 +15,12 @@ export const adminController = {
         const loggedInUser = request.auth.credentials;
         const users = await db.userStore.getAllUsers();
         const categories = await db.placemarkStore.getAllCategories();
+        const activities = await db.placemarkStore.getAllActivities();
         const viewData = {
         title: "PlaceMark Admin Dashboard",
         users: users,
         categories: categories,
+        activities: activities,
         }
         return h.view("admin-dashboard", viewData);
       },
@@ -62,4 +64,32 @@ export const adminController = {
           return h.redirect("/admin")
         },
       },
+      addActivity: {
+        auth:{
+          strategy: "session",
+          scope: "admin"
+        },
+        handler: async function (request, h) {
+        const newActivity = {
+          activity: request.payload.activity,
+          };
+          await db.placemarkStore.addActivity(newActivity);
+          return h.redirect("/admin")
+          },
+      },
+      
+      deleteActivity: {
+        auth:{
+          strategy: "session",
+          scope: "admin"
+        },
+        handler: async function (request, h) {
+          const activityId = request.params.id;
+          await db.placemarkStore.deleteActivityById(activityId);
+          return h.redirect("/admin")
+        },
+      },
+
+
+      
 };

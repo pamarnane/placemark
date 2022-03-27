@@ -2,6 +2,7 @@ import { accountsController } from "./controllers/accounts-controllers.js";
 import { dashboardController } from "./controllers/dashboard-controller.js";
 import { aboutController } from "./controllers/about-controller.js";
 import { adminController } from "./controllers/admin-controller.js";
+import { visitController} from "./controllers/visit-controller.js";
 
 
 export const webRoutes = [
@@ -23,5 +24,14 @@ export const webRoutes = [
   { method: "GET", path: "/admin", config: adminController.index },
   { method: "POST", path: "/admin/addcategory", config: adminController.addCategory },
   { method: "GET", path: "/admin/deletecategory/{id}", config: adminController.deleteCategory },
+  { method: "POST", path: "/admin/addactivity", config: adminController.addActivity },
+  { method: "GET", path: "/admin/deleteactivity/{id}", config: adminController.deleteActivity },
   { method: "GET", path: "/admin/deleteuser/{id}", config: adminController.deleteUser },
+
+  { method: "GET", path: "/placemark/{id}", config: visitController.index },
+  { method: "POST", path: "/placemark/{id}/logvisit", config: visitController.addVisit },
+  { method: "GET", path: "/placemark/{placemarkid}/deletevisit/{id}", config: visitController.deleteVisit },
+
+  { method: "POST", path: "/placemark/{id}/uploadimage", config: visitController.uploadImage },
+
 ];

@@ -66,4 +66,9 @@ export const placemarkService = {
     // eslint-disable-next-line dot-notation
     axios.defaults.headers.common["Authorization"] = "";
   },
+
+  async updateUser(id, updateDetails) {
+    const res = await axios.post(`${this.placemarkUrl}/api/users/${id}`,updateDetails);
+    return res.data;
+  },
 };

@@ -1,5 +1,5 @@
- // export const serviceUrl = "http://localhost:3000";
-export const serviceUrl = "https://shielded-beach-11659.herokuapp.com";
+export const serviceUrl = "http://localhost:3000";
+//  export const serviceUrl = "https://shielded-beach-11659.herokuapp.com";
 
 export const maggie = {
     firstName: "Maggie",

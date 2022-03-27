@@ -54,4 +54,12 @@ suite("User Model tests", () => {
     const allUsers = await db.userStore.getAllUsers();
     assert.equal(testUsers.length, allUsers.length);
   });
+
+  test("update a user", async () => {
+    const user = await db.userStore.addUser(maggie);
+    const updatedDetails = user;
+    updatedDetails.firstName = "margaret"
+    const updatedUser = await db.userStore.updateUser(user._id, updatedDetails);
+    assertSubset((user, updatedUser));
+  });
 });

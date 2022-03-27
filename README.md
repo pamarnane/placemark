@@ -15,3 +15,11 @@ It is proposed in later releases of the application that the user will be able t
 
 An administrator dashboard is provided that will allow administrators to delete user accounts and add or remove categories for use by users.
 
+ToDo List:
+- Add Joi validation for creating visit logs
+- Add API for visits, categories and activities
+- Add Swagger API documentation for API mentioned in previous item
+
+Known Bugs/Issues:
+ - Adding user via API call, scope is not added. Resolution is to store and add scope on server side.
+ Not added to User API documentation for security purposes.
