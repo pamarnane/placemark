@@ -81,7 +81,7 @@ export const userApi = {
     },
     tags: ["api"],
     description: "Delete all userApi",
-    notes: "All userApi removed from Playtime",
+    notes: "All userApi removed from Placemark",
   },
 
   authenticate: {

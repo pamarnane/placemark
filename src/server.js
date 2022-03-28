@@ -19,7 +19,7 @@ const __dirname = path.dirname(__filename);
 
  const swaggerOptions = {
     info: {
-      title: "Playtime API",
+      title: "Placemark API",
       version: "0.1",
     },
   };

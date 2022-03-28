@@ -1,5 +1,5 @@
-export const serviceUrl = "http://localhost:3000";
-//  export const serviceUrl = "https://shielded-beach-11659.herokuapp.com";
+// export const serviceUrl = "http://localhost:3000";
+  export const serviceUrl = "https://shielded-beach-11659.herokuapp.com";
 
 export const maggie = {
     firstName: "Maggie",
@@ -31,6 +31,14 @@ export const testUsers = [
     lastName: "Simpson",
     email: "bart@simpson.com",
     password: "secret",
+  },
+
+  {
+    firstName: "Patrick",
+    lastName: "Marnane",
+    email: "patrick@placemark.com",
+    password: "adminstrator",
+    scope: "admin",
   },
 ];
 
