@@ -3,6 +3,7 @@ import { db } from "../models/db.js";
 import { validationError } from "../logger.js";
 import { PlacemarkArray, IdSpec, PlacemarkSpec } from "../models/db/joi-schemas.js";
 
+
 export const placemarkApi = {
   find: {
     auth: {
@@ -81,5 +82,76 @@ export const placemarkApi = {
     tags: ["api"],
     description: "Delete all placemarks",
     notes: "Deletes all stored placemarks",
+  },
+
+  deleteOne: {
+    auth: {
+      strategy: "jwt",
+    },
+    handler: async function (request, h) {
+      try {
+        await db.placemarkStore.deletePlacemark(request.params.id);
+        return h.response().code(204);
+      } catch (err) {
+        return Boom.serverUnavailable("Database Error");
+      }
+    },
+    tags: ["api"],
+    description: "Delete single placemark",
+    notes: "Deletes a single placemark",
+  },
+
+  activities: {
+    auth: {
+      strategy: "jwt",
+    },
+    handler: async function (request, h) {
+      try {
+        const activities = await db.placemarkStore.getAllActivities();
+        return activities;
+      } catch (err) {
+        return Boom.serverUnavailable("Database Error");
+      }
+    },
+    tags: ["api"],
+    description: "Get all activities",
+    notes: "Returns details of all activities",
+  /*   response: { schema: PlacemarkArray, failAction: validationError }, */
+  },
+
+  categories: {
+    auth: {
+      strategy: "jwt",
+    },
+    handler: async function (request, h) {
+      try {
+        const categories = await db.placemarkStore.getAllCategories();
+        return categories;
+      } catch (err) {
+        return Boom.serverUnavailable("Database Error");
+      }
+    },
+    tags: ["api"],
+    description: "Get all categories",
+    notes: "Returns details of all categories",
+  /*   response: { schema: PlacemarkArray, failAction: validationError }, */
+  },
+
+  userPlacemarks: {
+    auth: {
+      strategy: "jwt",
+    },
+    handler: async function (request, h) {
+      try {
+        const placemarks = await db.placemarkStore.getUserPlacemarks(request.params.id);
+        return placemarks;
+      } catch (err) {
+        return Boom.serverUnavailable("Database Error");
+      }
+    },
+    tags: ["api"],
+    description: "Get all user placemarks",
+    notes: "Returns details of all placemarks",
+  /*   response: { schema: PlacemarkArray, failAction: validationError }, */
   },
 };

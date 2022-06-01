@@ -95,7 +95,8 @@ export const userApi = {
           return Boom.unauthorized("Invalid password");
         } else {
           const token = createToken(user);
-          return h.response({ success: true, token: token }).code(201);
+          const userID = (user._id);
+          return h.response({ success: true, token: token, userID: userID}).code(201);
         }
       } catch (err) {
         return Boom.serverUnavailable("Database Error");

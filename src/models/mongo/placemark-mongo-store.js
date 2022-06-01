@@ -15,7 +15,7 @@ export const placemarkMongoStore = {
   },
 
   async getUserPlacemarks(id) {
-    const placemark = await Placemark.find({ userid: id }).lean();
+    const placemark = await Placemark.find({ userID: id }).lean();
     return placemark;
   },
 
