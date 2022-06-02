@@ -90,6 +90,7 @@ export const placemarkMongoStore = {
     placemark.title = updatedPlacemark.title;
     placemark.img = updatedPlacemark.img;
     await placemark.save();
+    return placemark;
   },
 
 

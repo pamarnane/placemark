@@ -53,7 +53,7 @@ export const placemarkApi = {
       try {
         const placemark = await db.placemarkStore.addPlacemark(request.payload);
         if (placemark) {
-          return h.response(placemark).code(201);
+          return placemark
         }
         return Boom.badImplementation("error creating placemark");
       } catch (err) {

@@ -19,6 +19,7 @@ export const apiRoutes = [
   { method: "GET", path: "/api/placemarks/categories", config: placemarkApi.categories },
 
   { method: "POST", path: "/api/visit", config: visitApi.create },
+  { method: "POST", path: "/api/visit/image", config: visitApi.storeImage },
   { method: "GET", path: "/api/visit", config: visitApi.find },
   { method: "GET", path: "/api/visit/{id}", config: visitApi.getPlacemarkVisits },
 

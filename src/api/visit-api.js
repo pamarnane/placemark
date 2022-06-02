@@ -68,5 +68,27 @@ export const visitApi = {
         validate: { payload: PlacemarkSpec, failAction: validationError }, */
     },
 
+    storeImage: {
+      auth: {
+      strategy: "jwt",
+      },
+      handler: async function (request, h) {
+      try {
+        let placemark = await db.placemarkStore.getPlacemarkById(request.payload.id);
+        const url = request.payload.image_url;
+        placemark.img = url;
+        placemark = await db.placemarkStore.updatePlacemark(placemark);
+        return h.response(placemark).code(201);
+      } catch (err) {
+        return Boom.serverUnavailable("Database Error");
+        }
+      }
+    },
+    payload: {
+      multipart: true,
+      output: "data",
+      maxBytes: 209715200,
+      parse: true
+    },
 
 };
