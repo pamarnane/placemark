@@ -20,6 +20,7 @@ export const apiRoutes = [
 
   { method: "POST", path: "/api/visit", config: visitApi.create },
   { method: "POST", path: "/api/visit/image", config: visitApi.storeImage },
+  { method: "DELETE", path: "/api/visit/image/{id}", config: visitApi.deleteImage },
   { method: "GET", path: "/api/visit", config: visitApi.find },
   { method: "GET", path: "/api/visit/{id}", config: visitApi.getPlacemarkVisits },
 

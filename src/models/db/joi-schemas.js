@@ -37,6 +37,7 @@ export const PlacemarkSpec = Joi.object()
   longitude: Joi.number().min(-180).max(180).example(9.3441).required(),
   userID: Joi.string(),
   img: Joi.string(),
+  publicid: Joi.string(),
   _id: IdSpec,
   __v: Joi.number(),
 })

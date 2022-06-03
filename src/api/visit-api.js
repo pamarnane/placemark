@@ -75,8 +75,9 @@ export const visitApi = {
       handler: async function (request, h) {
       try {
         let placemark = await db.placemarkStore.getPlacemarkById(request.payload.id);
-        const url = request.payload.image_url;
+        const url = request.payload.url;
         placemark.img = url;
+        placemark.publicid = request.payload.publicid;
         placemark = await db.placemarkStore.updatePlacemark(placemark);
         return h.response(placemark).code(201);
       } catch (err) {
@@ -90,5 +91,27 @@ export const visitApi = {
       maxBytes: 209715200,
       parse: true
     },
+
+    deleteImage: {
+      auth: {
+      strategy: "jwt",
+      },
+      handler: async function (request, h) {
+      try {
+        let placemark = await db.placemarkStore.getPlacemarkById(request.params.id)
+        const success = await db.imageStore.deleteImage(placemark.publicid);
+        // success = db.imageStore.deleteImage(request.params.id);
+        const updatedPlacemark = placemark;
+          updatedPlacemark.img = "...";
+          updatedPlacemark.publicid = "..."; 
+       //   await db.imageStore.deleteImage(request.params.id);
+        placemark = await db.placemarkStore.updatePlacemark(updatedPlacemark);
+        // return h.response(updatedPlacemark).code(201);
+        return 1;
+      } catch (err) {
+        return Boom.serverUnavailable("Database Error");
+        }
+      }
+    }
 
 };
