@@ -112,6 +112,6 @@ export const visitApi = {
         return Boom.serverUnavailable("Database Error");
         }
       }
-    }
+    },
 
 };

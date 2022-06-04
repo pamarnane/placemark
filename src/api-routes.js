@@ -17,6 +17,7 @@ export const apiRoutes = [
   { method: "GET", path: "/api/placemarks/user/{id}", config: placemarkApi.userPlacemarks },
   { method: "GET", path: "/api/placemarks/activities", config: placemarkApi.activities },
   { method: "GET", path: "/api/placemarks/categories", config: placemarkApi.categories },
+  { method: "GET", path: "/api/placemarks/{id}/weather", config: placemarkApi.getCurrentWeather },
 
   { method: "POST", path: "/api/visit", config: visitApi.create },
   { method: "POST", path: "/api/visit/image", config: visitApi.storeImage },

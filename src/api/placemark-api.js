@@ -1,7 +1,9 @@
 import Boom from "@hapi/boom";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import Axios from "axios";
 import { db } from "../models/db.js";
 import { validationError } from "../logger.js";
-import { PlacemarkArray, IdSpec, PlacemarkSpec } from "../models/db/joi-schemas.js";
+import { PlacemarkArray, IdSpec, PlacemarkSpec } from "../models/db/joi-schemas.js"; 
 
 
 export const placemarkApi = {
@@ -153,5 +155,25 @@ export const placemarkApi = {
     description: "Get all user placemarks",
     notes: "Returns details of all placemarks",
   /*   response: { schema: PlacemarkArray, failAction: validationError }, */
+  },
+
+  getCurrentWeather: {
+    auth: {
+    strategy: "jwt",
+    },
+    handler: async function (request, h) {
+    try {
+      const placemark = await db.placemarkStore.getPlacemarkById(request.params.id)
+      const api = process.env.openweathermap_key 
+      const requestUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${placemark.latitude}&lon=${placemark.longitude}&units=metric&appid=${api}`
+      const result = await Axios.get(requestUrl); 
+      if (!result) {
+        return []
+      }
+      return result.data;
+    } catch(err){
+        return err;
+      }
+    }
   },
 };
