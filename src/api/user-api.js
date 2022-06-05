@@ -1,9 +1,12 @@
 /* eslint-disable no-else-return */
 import Boom from "@hapi/boom";
+import bcrypt from "bcrypt"; 
 import { db } from "../models/db.js";
 import {UserArray, UserSpec, UserCredentialsSpec, IdSpec, JwtAuth, UserUpdateSpec } from "../models/db/joi-schemas.js";
 import { validationError } from "../logger.js";
 import { createToken } from "./jwt-utils.js";
+
+const saltRounds = 10;
 
 export const userApi = {
   find: {
@@ -51,7 +54,9 @@ export const userApi = {
     auth: false,
     handler: async function (request, h) {
       try {
-        const user = await db.userStore.addUser(request.payload);
+        let user = request.payload;
+        user.password = await bcrypt.hash(user.password, saltRounds);
+        user = await db.userStore.addUser(user);
         if (user) {
           return h.response(user).code(201);
         }
@@ -89,15 +94,17 @@ export const userApi = {
     handler: async function(request, h) {
       try {
         const user = await db.userStore.getUserByEmail(request.payload.email);
-        if (!user) {
-          return Boom.unauthorized("User not found");
-        } else if (user.password !== request.payload.password) {
-          return Boom.unauthorized("Invalid password");
-        } else {
+        const passwordsMatch = await bcrypt.compare(request.payload.password, user.password);
+        if (!user || !passwordsMatch) {
+          return Boom.unauthorized("User not found or Invalid password");
+        // } else if (user.password !== request.payload.password) {
+        // } else if (await bcrypt.compare(password, user.password)) {
+        //   return Boom.unauthorized("Invalid password");
+        } 
           const token = createToken(user);
           const userID = (user._id);
           return h.response({ success: true, token: token, userID: userID}).code(201);
-        }
+        
       } catch (err) {
         return Boom.serverUnavailable("Database Error");
       }
