@@ -1,5 +1,4 @@
 import Boom from "@hapi/boom";
-// eslint-disable-next-line import/no-extraneous-dependencies
 import Axios from "axios";
 import { db } from "../models/db.js";
 import { validationError } from "../logger.js";
